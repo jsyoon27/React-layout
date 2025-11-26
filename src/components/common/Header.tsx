@@ -2,39 +2,26 @@ import { styled } from "styled-components";
 import ThemeSwitcher from "../header/ThemeSwitcher";
 import logo from "../../assets/logo.png";
 import { FaSignInAlt, FaRegUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useCategory } from "../../hooks/useCategory";
 
 
-const CATEGORY = [
-    {
-        id: null,
-        name: "전체",
-    },
-    {
-        id: 0,
-        name: "동화",
-    },
-    {
-        id: 1,
-        name: "소설",
-    },
-    {
-        id: 2,
-        name: "사회",
-    }
-]
 function Header() {
+    const { category } = useCategory();
     return (
         <HeaderStyle>
             <h1 className="logo">
-                <img src={logo} alt="book store" />
+                <Link to="/">
+                    <img src={logo} alt="book store" />
+                </Link>
             </h1>
             <nav className="category">
                 <ul>
-                    {CATEGORY.map((item) => (
+                    {category.map((item) => (
                         <li key={item.id}>
-                            <a href={item.id === null ? `/books` : `/books?category_id=${item.id}`}>
+                            <Link to={item.id === null ? `/books` : `/books?category_id=${item.id}`}>
                                 {item.name}
-                            </a>
+                            </Link>
                         </li>
                 ))
             }
@@ -78,7 +65,7 @@ const HeaderStyle = styled.header`
             gap: 32px;
             li{
                 a {
-                    font-size: 1.5rem
+                    font-size: 1.5rem;
                     font-weight: 600;
                     text-decoration: none;
                     color: ${({theme})=> theme.color.text};
@@ -95,7 +82,7 @@ const HeaderStyle = styled.header`
             gap: 16px;
             li{
                 a {
-                    font-size: 1rem
+                    font-size: 1rem;
                     font-weight: 600;
                     text-decoration: none;
                     display: flex;
